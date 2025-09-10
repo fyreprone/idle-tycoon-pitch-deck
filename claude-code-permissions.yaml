@@ -1,0 +1,1354 @@
+# Claude Code Bash Command Permissions Configuration
+# This file defines which bash commands Claude Code can execute automatically (allow),
+# must ask permission for (prompt), or is forbidden from executing (deny)
+#
+# Current Policy (Updated 2024-12):
+# - ALLOW: Most development and file operations execute automatically
+# - PROMPT: Potentially dangerous system operations require confirmation  
+# - DENY: Currently empty - no commands are completely blocked
+
+# ALLOW - Commands that can be executed without user confirmation
+allow:
+  # File System - Read Operations
+  - ls
+  - "ls *"
+  - pwd
+  - find
+  - tree
+  - stat
+  - file
+  - which
+  - whereis
+  - type
+  - readlink
+  - dirname
+  - basename
+  - realpath
+  
+  # File Content - Read Only
+  - cat
+  - head
+  - tail
+  - less
+  - more
+  - grep
+  - egrep
+  - fgrep
+  - rg  # ripgrep
+  - ag  # silver searcher
+  - ack
+  - wc
+  - sort
+  - uniq
+  - cut
+  - awk
+  - sed  # when used for reading/searching only
+  - jq  # JSON processor
+  - yq  # YAML processor
+  - diff
+  - comm
+  - cmp
+  - md5sum
+  - sha1sum
+  - sha256sum
+  - sha512sum
+  
+  # System Information
+  - date
+  - cal
+  - uptime
+  - hostname
+  - uname
+  - arch
+  - lsb_release
+  - env
+  - printenv
+  - locale
+  - id
+  - whoami
+  - groups
+  - ulimit
+  - umask
+  - df
+  - du
+  - free
+  - ps
+  - top
+  - htop
+  - jobs
+  - history
+  
+  # Development - Version Control (Read Operations)
+  - "git status"
+  - "git log"
+  - "git branch"
+  - "git branch -a"
+  - "git remote"
+  - "git remote -v"
+  - "git diff"
+  - "git show"
+  - "git describe"
+  - "git tag"
+  - "git tag -l"
+  - "git config --list"
+  - "git config --get *"
+  - "git rev-parse"
+  - "git ls-files"
+  - "git ls-tree"
+  - "git blame"
+  - "git shortlog"
+  - "git reflog"
+  
+  # Development - Package Managers (Info Only)
+  - "npm list"
+  - "npm ls"
+  - "npm view"
+  - "npm info"
+  - "npm outdated"
+  - "npm doctor"
+  - "npm config list"
+  - "yarn list"
+  - "yarn info"
+  - "yarn why"
+  - "pnpm list"
+  - "pip list"
+  - "pip show"
+  - "pipenv graph"
+  - "poetry show"
+  - "cargo tree"
+  - "cargo search"
+  - "gem list"
+  - "bundle list"
+  - "bundle show"
+  - "composer show"
+  - "go list"
+  - "go env"
+  - "dotnet list"
+  - "mvn dependency:tree"
+  - "gradle dependencies"
+  
+  # Development - Language Version Managers
+  - "node --version"
+  - "npm --version"
+  - "yarn --version"
+  - "pnpm --version"
+  - "python --version"
+  - "python3 --version"
+  - "ruby --version"
+  - "go version"
+  - "rust --version"
+  - "cargo --version"
+  - "java --version"
+  - "javac --version"
+  - "php --version"
+  - "dotnet --version"
+  - "nvm list"
+  - "nvm current"
+  - "rbenv versions"
+  - "pyenv versions"
+  
+  # Development - Build Tools (Info Only)
+  - "make --version"
+  - "cmake --version"
+  - "webpack --version"
+  - "vite --version"
+  - "parcel --version"
+  - "rollup --version"
+  - "esbuild --version"
+  - "tsc --version"
+  - "babel --version"
+  
+  # Development - Testing (Info Only)
+  - "jest --version"
+  - "mocha --version"
+  - "pytest --version"
+  - "rspec --version"
+  
+  # Development - Linting (Info Only)
+  - "eslint --version"
+  - "prettier --version"
+  - "pylint --version"
+  - "rubocop --version"
+  - "golint --version"
+  
+  # Text Processing
+  - echo
+  - printf
+  - tr
+  - fold
+  - expand
+  - unexpand
+  - column
+  - paste
+  - join
+  - split  # with output to temp only
+  - csplit  # with output to temp only
+  
+  # Archive Operations (Read Only)
+  - "tar -t"  # list contents
+  - "tar --list"
+  - "unzip -l"  # list contents
+  - "zipinfo"
+  - "7z l"  # list contents
+  - "rar l"  # list contents
+  
+  # Network (Info Only)
+  - ping  # limited count
+  - "ping -c"
+  - nslookup
+  - dig
+  - host
+  - whois
+  - traceroute
+  - tracepath
+  - mtr  # read-only mode
+  - netstat  # without modify options
+  - ss  # socket statistics
+  - ifconfig  # read-only
+  - ip  # read-only commands
+  
+  # Help and Documentation
+  - man
+  - info
+  - help
+  - apropos
+  - whatis
+  - tldr
+  
+  # Shell Built-ins (Safe)
+  - alias
+  - unalias
+  - export
+  - set
+  - unset
+  - source
+  - "."
+  - true
+  - false
+  - test
+  - "["
+  - "[["
+  - return
+  - exit  # in subshells only
+  - shift
+  - times
+  - type
+  - hash
+  - command
+  - builtin
+  - enable
+  - compgen
+  - complete
+  
+  # Directory Navigation
+  - cd
+  - pushd
+  - popd
+  - dirs
+  
+  # === FORMERLY PROMPT COMMANDS (Now ALLOW) ===
+  # File System - Write Operations
+  - touch
+  - mkdir
+  - cp
+  - mv
+  - ln
+  - rename
+  - install
+  
+  # File System - Modify Operations  
+  - chmod
+  - chown
+  - chgrp
+  - setfacl
+  - getfacl
+  
+  # File Content - Write Operations
+  - "sed -i"  # in-place editing
+  - "awk -i"  # in-place editing
+  - "perl -i"  # in-place editing
+  - tee
+  - ">"  # redirect overwrite
+  - ">>"  # redirect append
+  
+  # Development - Version Control (Write Operations)
+  - "git add"
+  - "git commit"
+  - "git push"
+  - "git pull"
+  - "git fetch"
+  - "git merge"
+  - "git rebase"
+  - "git cherry-pick"
+  - "git reset"
+  - "git revert"
+  - "git checkout"
+  - "git switch"
+  - "git restore"
+  - "git stash"
+  - "git tag -a"
+  - "git tag -d"
+  - "git branch -d"
+  - "git branch -D"
+  - "git remote add"
+  - "git remote remove"
+  - "git submodule"
+  - "git clean"
+  - "git gc"
+  - "git prune"
+  - "git bisect"
+  - "git apply"
+  - "git am"
+  - "git format-patch"
+  - "gh *"  # GitHub CLI - all commands
+  - "hub *"  # GitHub hub - all commands
+  - "glab *"  # GitLab CLI
+  
+  # Development - Package Managers (Install/Modify)
+  - "npm install"
+  - "npm i"
+  - "npm ci"
+  - "npm update"
+  - "npm upgrade"
+  - "npm uninstall"
+  - "npm rm"
+  - "npm remove"
+  - "npm link"
+  - "npm unlink"
+  - "npm run"
+  - "npm start"
+  - "npm test"
+  - "npm build"
+  - "npm publish"
+  - "npm unpublish"
+  - "npm deprecate"
+  - "npm dist-tag"
+  - "npm audit"
+  - "npm audit fix"
+  - "npm fund"
+  - "npm cache"
+  - "npm prune"
+  - "npm dedupe"
+  - "npm init"
+  - "npx"
+  - "yarn install"
+  - "yarn add"
+  - "yarn remove"
+  - "yarn upgrade"
+  - "yarn run"
+  - "yarn build"
+  - "yarn test"
+  - "yarn start"
+  - "yarn link"
+  - "yarn unlink"
+  - "yarn publish"
+  - "yarn cache"
+  - "yarn init"
+  - "pnpm install"
+  - "pnpm add"
+  - "pnpm remove"
+  - "pnpm update"
+  - "pnpm run"
+  - "pip install"
+  - "pip uninstall"
+  - "pip freeze"
+  - "pipenv install"
+  - "pipenv uninstall"
+  - "pipenv update"
+  - "pipenv run"
+  - "poetry install"
+  - "poetry add"
+  - "poetry remove"
+  - "poetry update"
+  - "poetry run"
+  - "poetry build"
+  - "poetry publish"
+  - "cargo build"
+  - "cargo run"
+  - "cargo test"
+  - "cargo bench"
+  - "cargo update"
+  - "cargo install"
+  - "cargo uninstall"
+  - "cargo publish"
+  - "gem install"
+  - "gem uninstall"
+  - "gem update"
+  - "bundle install"
+  - "bundle update"
+  - "bundle exec"
+  - "composer install"
+  - "composer update"
+  - "composer require"
+  - "composer remove"
+  - "go get"
+  - "go install"
+  - "go mod"
+  - "go build"
+  - "go run"
+  - "go test"
+  - "dotnet build"
+  - "dotnet run"
+  - "dotnet test"
+  - "dotnet publish"
+  - "dotnet add"
+  - "dotnet remove"
+  - "dotnet restore"
+  - "dotnet pack"
+  - "dotnet nuget"
+  - "mvn install"
+  - "mvn compile"
+  - "mvn test"
+  - "mvn package"
+  - "mvn deploy"
+  - "mvn clean"
+  - "gradle build"
+  - "gradle run"
+  - "gradle test"
+  - "gradle clean"
+  
+  # Development - Build Tools
+  - make
+  - cmake
+  - webpack
+  - vite
+  - parcel
+  - rollup
+  - esbuild
+  - tsc
+  - babel
+  - grunt
+  - gulp
+  - jake
+  - brunch
+  - browserify
+  
+  # Development - Testing
+  - jest
+  - mocha
+  - jasmine
+  - karma
+  - protractor
+  - cypress
+  - playwright
+  - puppeteer
+  - selenium
+  - pytest
+  - unittest
+  - nose
+  - rspec
+  - minitest
+  - cucumber
+  - capybara
+  - phpunit
+  - behat
+  - codeception
+  
+  # Development - Linting & Formatting
+  - eslint
+  - prettier
+  - tslint
+  - stylelint
+  - htmlhint
+  - standard
+  - xo
+  - pylint
+  - flake8
+  - black
+  - autopep8
+  - yapf
+  - mypy
+  - rubocop
+  - reek
+  - golint
+  - gofmt
+  - goimports
+  - rustfmt
+  - clippy
+  - php-cs-fixer
+  - phpcs
+  - phpcbf
+  
+  # Database Clients
+  - mysql
+  - psql
+  - sqlite3
+  - mongo
+  - mongosh
+  - redis-cli
+  - cqlsh  # Cassandra
+  - influx  # InfluxDB
+  - cockroach
+  - mariadb
+  - sqlcmd  # SQL Server
+  - neo4j
+  - etcdctl
+  
+  # Container & Orchestration
+  - docker
+  - "docker *"
+  - docker-compose
+  - podman
+  - kubectl
+  - helm
+  - minikube
+  - kind
+  - k3s
+  - k9s
+  - skaffold
+  - terraform
+  - ansible
+  - vagrant
+  - packer
+  
+  # Cloud CLIs
+  - aws
+  - gcloud
+  - az  # Azure
+  - heroku
+  - vercel
+  - netlify
+  - fly  # Fly.io
+  - railway
+  - render
+  - digitalocean
+  - linode
+  - vultr
+  - scaleway
+  - ibmcloud
+  - oci  # Oracle Cloud
+  
+  # Archive Operations (Write)
+  - "tar -c"  # create
+  - "tar -x"  # extract
+  - "tar -u"  # update
+  - "tar -r"  # append
+  - zip
+  - unzip  # extract
+  - gzip
+  - gunzip
+  - bzip2
+  - bunzip2
+  - xz
+  - unxz
+  - 7z  # all operations except list
+  - rar  # all operations except list
+  
+  # Process Management
+  - kill
+  - killall
+  - pkill
+  - nice
+  - renice
+  - nohup
+  - timeout
+  - watch
+  - bg
+  - fg
+  - disown
+  - wait
+  - trap
+  - exec
+  
+  # System Services
+  - systemctl
+  - service
+  - journalctl
+  - launchctl  # macOS
+  - brew  # Homebrew
+  - apt  # with sudo
+  - apt-get  # with sudo
+  - yum  # with sudo
+  - dnf  # with sudo
+  - pacman  # with sudo
+  - zypper  # with sudo
+  - snap
+  - flatpak
+  - nix
+  - apk  # Alpine
+  
+  # Network Operations
+  - curl
+  - wget
+  - scp
+  - sftp
+  - rsync
+  - ssh  # interactive
+  - telnet
+  - ftp
+  - nc  # netcat
+  - ncat
+  - socat
+  - ngrok
+  - localtunnel
+  - serveo
+  
+  # Development Servers
+  - "python -m http.server"
+  - "python -m SimpleHTTPServer"
+  - "php -S"
+  - "ruby -run -e httpd"
+  - "busybox httpd"
+  - http-server  # Node.js
+  - live-server
+  - serve
+  - browser-sync
+  - json-server
+  
+  # File Editors (Terminal)
+  - vi
+  - vim
+  - nvim
+  - emacs
+  - nano
+  - pico
+  - ed
+  - sed  # interactive mode
+  - awk  # with files
+  
+  # Development - Environment
+  - nvm
+  - rbenv
+  - pyenv
+  - jenv
+  - sdkman
+  - asdf
+  - volta
+  - fnm
+  
+  # Monitoring & Debugging
+  - strace
+  - ltrace
+  - dtrace
+  - gdb
+  - lldb
+  - valgrind
+  - perf
+  - tcpdump
+  - wireshark
+  - tshark
+  - iftop
+  - iotop
+  - nethogs
+  - vnstat
+  - dstat
+  - vmstat
+  - iostat
+  - sar
+  - lsof
+  - fuser
+  - pgrep
+  - pstree
+  
+  # Disk Operations
+  - fdisk
+  - parted
+  - gparted
+  - mkfs
+  - fsck
+  - mount
+  - umount
+  - blkid
+  - lsblk
+  - hdparm
+  - smartctl
+  - dd  # disk operations
+  
+  # Backup & Sync
+  - tar  # with compression
+  - rsync  # with delete
+  - rclone
+  - restic
+  - borg
+  - duplicity
+  - rdiff-backup
+  - bup
+  - dar
+  
+  # Scripting Languages (Execution)
+  - python
+  - python3
+  - node
+  - ruby
+  - perl
+  - php
+  - lua
+  - julia
+  - R
+  - octave
+  - matlab
+  - swift
+  - kotlin
+  - scala
+  - groovy
+  - clojure
+  - elixir
+  - erlang
+  - haskell
+  - ocaml
+  - scheme
+  - racket
+  - lisp
+  - prolog
+  - tcl
+  - awk  # script execution
+  - sed  # script execution
+  - bash
+  - sh
+  - zsh
+  - fish
+  - dash
+  - ksh
+  - csh
+  - tcsh
+  
+  # Temporary File Operations
+  - mktemp
+  - tempfile
+  
+  # Cron & Scheduling
+  - crontab
+  - at
+  - batch
+  - anacron
+  
+  # Email & Communication
+  - mail
+  - sendmail
+  - postfix
+  - mutt
+  - alpine  # email client
+  
+  # Desktop Environment (if applicable)
+  - xdg-open
+  - gnome-open
+  - kde-open
+  - open  # macOS
+  - start  # Windows WSL
+  - explorer.exe  # Windows WSL
+
+# PROMPT - Commands that require user confirmation before execution
+prompt:
+  # Destructive File Operations
+  - "rm -rf /"
+  - "rm -rf /*"
+  - "rm -rf ~"
+  - "rm -rf ~/*"
+  - "rm -rf ."
+  - "rm -rf .."
+  - "rm -rf *"
+  - "find / -delete"
+  - "find . -delete"
+  - shred
+  - wipe
+  - secure-delete
+  - srm
+  
+  # System Modification
+  - shutdown
+  - reboot
+  - poweroff
+  - halt
+  - init
+  - telinit
+  - systemctl poweroff
+  - systemctl reboot
+  - systemctl halt
+  - systemctl suspend
+  - systemctl hibernate
+  
+  # User & Permission Management
+  - useradd
+  - userdel
+  - usermod
+  - groupadd
+  - groupdel
+  - groupmod
+  - passwd
+  - chpasswd
+  - su
+  - sudo  # except specific allowed commands
+  - visudo
+  - adduser
+  - deluser
+  - addgroup
+  - delgroup
+  
+  # System Configuration
+  - sysctl  # with write
+  - modprobe
+  - rmmod
+  - insmod
+  - lsmod  # with modify
+  - depmod
+  - update-grub
+  - grub-install
+  - update-initramfs
+  - mkinitcpio
+  - dracut
+  - ldconfig
+  - updatedb
+  - makewhatis
+  - mandb
+  - fc-cache
+  - update-alternatives
+  - dpkg-reconfigure
+  
+  # Network Configuration
+  - iptables
+  - ip6tables
+  - nftables
+  - firewall-cmd
+  - ufw
+  - pfctl
+  - ipfw
+  - ifup
+  - ifdown
+  - ifconfig  # with modify
+  - ip  # with modify
+  - route  # with modify
+  - brctl
+  - tunctl
+  - vconfig
+  - ethtool  # with modify
+  - iw  # with modify
+  - iwconfig  # with modify
+  - wpa_supplicant
+  - dhclient
+  - dhcpcd
+  - NetworkManager
+  - nmcli  # with modify
+  - nmtui
+  - netplan
+  
+  # Package Management (System)
+  - "apt install"  # without sudo
+  - "apt remove"
+  - "apt purge"
+  - "apt autoremove"
+  - "apt-get install"
+  - "apt-get remove"
+  - "apt-get purge"
+  - "apt-get autoremove"
+  - "apt-get dist-upgrade"
+  - "yum install"
+  - "yum remove"
+  - "yum erase"
+  - "dnf install"
+  - "dnf remove"
+  - "dnf erase"
+  - "pacman -S"
+  - "pacman -R"
+  - "pacman -Rns"
+  - "zypper install"
+  - "zypper remove"
+  - "emerge"
+  - "rpm -i"
+  - "rpm -e"
+  - "dpkg -i"
+  - "dpkg -r"
+  - "dpkg -P"
+  - "snap install"
+  - "snap remove"
+  - "flatpak install"
+  - "flatpak uninstall"
+  
+  # Kernel & Boot
+  - kexec
+  - grub
+  - grub2
+  - lilo
+  - syslinux
+  - bootctl
+  - efibootmgr
+  - kernel-install
+  
+  # Hardware Access
+  - hdparm  # with write
+  - sdparm  # with write
+  - nvme  # with write
+  - setpci
+  - setserial
+  - stty  # certain options
+  - loadkeys
+  - setleds
+  - kbdrate
+  - hwclock  # with set
+  - rtcwake
+  - cpufreq-set
+  - cpupower
+  - sensors-detect
+  - nvidia-smi  # with modify
+  - aticonfig
+  - amdgpu-pro
+  
+  # Dangerous Git Operations
+  - "git push --force"
+  - "git push -f"
+  - "git push --force-with-lease"
+  - "git reset --hard HEAD~"
+  - "git reset --hard origin"
+  - "git clean -fdx"
+  - "git filter-branch"
+  - "git filter-repo"
+  - "git config --global"  # without user permission
+  - "git config --system"
+  
+  # Crypto & Security
+  - gpg  # with private key operations
+  - gpg2  # with private key operations
+  - ssh-keygen  # without user permission
+  - openssl  # key generation without permission
+  - certtool
+  - keytool
+  - vault  # HashiCorp Vault write operations
+  - pass  # password store modifications
+  - keepassxc-cli  # with write
+  - bitwarden  # with write
+  - 1password  # with write
+  
+  # Fork Bombs & Resource Exhaustion
+  - ":(){ :|:& };:"
+  - "fork while fork"
+  - "yes > /dev/null"
+  - "cat /dev/zero"
+  - "dd if=/dev/zero"
+  - "dd if=/dev/random"
+  
+  # Direct Hardware/Device Access
+  - "dd if=* of=/dev/sda"
+  - "dd if=* of=/dev/nvme"
+  - "cat > /dev/sda"
+  - "echo > /dev/sda"
+  - "/dev/mem"
+  - "/dev/kmem"
+  - "/dev/port"
+  
+  # Environment Destruction
+  - "export PATH="
+  - "unset PATH"
+  - "export LD_LIBRARY_PATH="
+  - "export LD_PRELOAD="
+  
+  # Malicious Downloads/Execution
+  - "curl | bash"
+  - "wget -O - | bash"
+  - "curl | sh"
+  - "wget -O - | sh"
+  - "curl | sudo"
+  - "wget | sudo"
+  
+  # System Logs & Audit
+  - "rm /var/log/*"
+  - "echo > /var/log/"
+  - "truncate /var/log/"
+  - auditctl  # with modify
+  - ausearch  # with delete
+  - aureport  # with delete
+  
+  # SELinux/AppArmor
+  - setenforce
+  - semanage
+  - setsebool
+  - restorecon  # system-wide
+  - aa-complain
+  - aa-enforce
+  - aa-disable
+  - apparmor_parser  # with write
+  
+  # Debugging Tools (Dangerous)
+  - ptrace  # attach to processes
+  - kgdb
+  - kdb
+  - sysrq-trigger
+  
+  # Virtual Machine Operations
+  - virsh  # with destroy/undefine
+  - vboxmanage  # with delete
+  - vmware-cmd  # with delete
+  - qemu  # with delete
+  - bhyve  # with destroy
+  
+  # Container Operations (Dangerous)
+  - "docker system prune -a"
+  - "docker rm -f $(docker ps -aq)"
+  - "docker rmi -f"
+  - "docker volume prune"
+  - "docker network prune"
+  - "kubectl delete namespace"
+  - "kubectl delete all --all"
+  - "helm delete"
+  - "helm uninstall"
+  
+  # Database Destructive Operations
+  - "DROP DATABASE"
+  - "DROP TABLE"
+  - "TRUNCATE"
+  - "DELETE FROM"
+  - "mongod --repair"
+  - "redis-cli FLUSHALL"
+  - "redis-cli FLUSHDB"
+  
+  # Backup/Snapshot Deletion
+  - "btrfs subvolume delete"
+  - "zfs destroy"
+  - "lvremove"
+  - "vgremove"
+  - "pvremove"
+
+# DENY - Commands that should never be executed (currently empty - all moved to PROMPT)
+deny: []
+
+# Special Rules & Exceptions
+special_rules:
+  # Commands that need special handling
+  git_config_user:
+    pattern: "git config user.*"
+    rule: "allow"  # User identity configuration is safe
+    
+  git_config_local:
+    pattern: "git config --local"
+    rule: "allow"  # Local repo config is safe
+    
+  sudo_specific:
+    pattern: "sudo npm install -g"
+    rule: "prompt"  # Global npm packages need confirmation
+    
+  rm_interactive:
+    pattern: "rm -i"
+    rule: "allow"  # Interactive mode is safe
+    
+  rm_single_file:
+    pattern: "rm [^*]*"  # Single file without wildcards
+    rule: "prompt"
+    
+  find_exec:
+    pattern: "find * -exec"
+    rule: "prompt"  # Needs review of what's being executed
+    
+  xargs_exec:
+    pattern: "xargs *"
+    rule: "prompt"  # Needs review of what's being executed
+    
+  pipe_to_shell:
+    pattern: "* | bash"
+    rule: "deny"
+    
+  output_redirect_dev:
+    pattern: "> /dev/*"
+    rule: "deny"
+    
+  curl_post:
+    pattern: "curl -X POST"
+    rule: "prompt"
+    
+  wget_post:
+    pattern: "wget --post"
+    rule: "prompt"
+    
+  ssh_key_read:
+    pattern: "cat ~/.ssh/*.pub"
+    rule: "allow"  # Public keys are safe to read
+    
+  ssh_key_private:
+    pattern: "cat ~/.ssh/id_*"
+    rule: "deny"  # Private keys must not be read
+    
+  env_vars_read:
+    pattern: "echo $*"
+    rule: "allow"  # Reading env vars is ok
+    
+  env_vars_export_empty:
+    pattern: "export *="
+    rule: "prompt"  # Setting env vars needs review
+    
+  localhost_only:
+    pattern: "* localhost*"
+    rule: "allow"  # Localhost operations are generally safe
+    
+  temp_directory:
+    pattern: "* /tmp/*"
+    rule: "allow"  # Temp directory operations are generally safe
+    
+  home_hidden:
+    pattern: "* ~/.*"
+    rule: "prompt"  # Hidden files in home need review
+
+# Context-Aware Rules
+context_rules:
+  development_mode:
+    # More permissive in development projects
+    when: "in_git_repo"
+    modifications:
+      - "npm install": "allow"
+      - "npm run": "allow"
+      - "yarn install": "allow"
+      - "pip install": "allow"
+      - "bundle install": "allow"
+      
+  production_mode:
+    # More restrictive in production
+    when: "production_env"
+    modifications:
+      - "git push": "deny"
+      - "npm publish": "deny"
+      - "docker push": "deny"
+      - "kubectl apply": "deny"
+      
+  test_mode:
+    # Allow test execution
+    when: "test_files_present"
+    modifications:
+      - "npm test": "allow"
+      - "jest": "allow"
+      - "pytest": "allow"
+      - "rspec": "allow"
+      
+  ci_environment:
+    # CI/CD specific rules
+    when: "ci_detected"
+    modifications:
+      - "npm ci": "allow"
+      - "docker build": "allow"
+      - "docker push": "prompt"
+
+# Rate Limiting Rules
+rate_limits:
+  git_operations:
+    commands: ["git push", "git pull", "git fetch"]
+    max_per_minute: 5
+    max_per_hour: 30
+    
+  package_installs:
+    commands: ["npm install", "pip install", "gem install"]
+    max_per_minute: 3
+    max_per_hour: 20
+    
+  file_deletions:
+    commands: ["rm", "unlink", "rmdir"]
+    max_per_minute: 10
+    max_per_hour: 100
+    
+  network_requests:
+    commands: ["curl", "wget", "ping"]
+    max_per_minute: 20
+    max_per_hour: 200
+    
+  process_management:
+    commands: ["kill", "killall", "pkill"]
+    max_per_minute: 5
+    max_per_hour: 30
+
+# Audit & Logging
+audit:
+  always_log:
+    - "rm *"
+    - "git push"
+    - "npm publish"
+    - "docker *"
+    - "kubectl *"
+    - "ssh *"
+    - "sudo *"
+    - "*password*"
+    - "*secret*"
+    - "*token*"
+    - "*key*"
+    - "curl -X POST"
+    - "curl -X PUT"
+    - "curl -X DELETE"
+    
+  log_with_content:
+    - "git commit -m"
+    - "echo > "
+    - "cat > "
+    - "sed -i"
+    
+  never_log_content:
+    - "*password*"
+    - "*secret*"
+    - "*token*"
+    - "*api_key*"
+    - "*.pem"
+    - "*.key"
+    - "*.pfx"
+
+# Grouped Command Aliases
+command_groups:
+  read_only_operations:
+    - ls
+    - cat
+    - grep
+    - find
+    - head
+    - tail
+    - less
+    - more
+    
+  safe_file_operations:
+    - touch
+    - mkdir
+    - cp
+    - mv
+    
+  dangerous_file_operations:
+    - rm
+    - shred
+    - wipe
+    
+  git_safe:
+    - git status
+    - git log
+    - git diff
+    - git branch
+    
+  git_modify:
+    - git add
+    - git commit
+    - git push
+    - git pull
+    
+  git_dangerous:
+    - git reset --hard
+    - git push --force
+    - git clean
+    
+  package_info:
+    - npm list
+    - pip list
+    - gem list
+    
+  package_modify:
+    - npm install
+    - pip install
+    - gem install
+    
+  system_info:
+    - uname
+    - hostname
+    - whoami
+    - date
+    
+  system_modify:
+    - systemctl
+    - service
+    - useradd
+    - chmod
+    
+  network_info:
+    - ping
+    - netstat
+    - ifconfig
+    
+  network_modify:
+    - iptables
+    - route add
+    - ifconfig up
+
+# Environment Variable Protection
+protected_env_vars:
+  never_modify:
+    - PATH
+    - LD_LIBRARY_PATH
+    - LD_PRELOAD
+    - SHELL
+    - USER
+    - HOME
+    - LANG
+    - LC_ALL
+    
+  prompt_before_modify:
+    - JAVA_HOME
+    - PYTHON_PATH
+    - NODE_PATH
+    - GOPATH
+    - CARGO_HOME
+    - GEM_HOME
+    - NPM_TOKEN
+    - GITHUB_TOKEN
+    - AWS_ACCESS_KEY_ID
+    - AWS_SECRET_ACCESS_KEY
+    - AZURE_CREDENTIALS
+    - GOOGLE_APPLICATION_CREDENTIALS
+    
+  sensitive_patterns:
+    - "*_TOKEN"
+    - "*_KEY"
+    - "*_SECRET"
+    - "*_PASSWORD"
+    - "*_APIKEY"
+    - "*_AUTH"
+    - "*_CREDENTIALS"
+
+# File Path Protection
+protected_paths:
+  never_modify:
+    - /
+    - /bin
+    - /sbin
+    - /usr/bin
+    - /usr/sbin
+    - /lib
+    - /lib64
+    - /etc
+    - /sys
+    - /proc
+    - /dev
+    - /boot
+    - /root
+    - ~/.ssh
+    - ~/.gnupg
+    - ~/.password-store
+    
+  prompt_before_modify:
+    - ~/.bashrc
+    - ~/.zshrc
+    - ~/.profile
+    - ~/.bash_profile
+    - ~/.gitconfig
+    - ~/.npmrc
+    - ~/.pip
+    - ~/.cargo
+    - ~/.config
+    - ~/.local
+    - ~/Documents
+    - ~/Desktop
+    - ~/Downloads
+    
+  allow_in_project:
+    - ./node_modules
+    - ./vendor
+    - ./.git
+    - ./dist
+    - ./build
+    - ./target
+    - ./out
+    - ./tmp
+    - ./.cache
+
+# Output Size Limits
+output_limits:
+  max_lines_default: 1000
+  max_characters_default: 100000
+  
+  command_specific:
+    find: 500
+    grep: 1000
+    "git log": 100
+    "npm list": 500
+    ps: 200
+    netstat: 200
+    docker ps: 100
+    kubectl get: 200
+
+# Notes for Implementation
+notes:
+  - "Commands should be matched using regex patterns for flexibility"
+  - "Context-aware rules should check project type and environment"
+  - "Rate limiting should be per-session or per-project"
+  - "Audit logs should be stored securely and rotated"
+  - "Special rules take precedence over general allow/deny lists"
+  - "User can override these defaults in their project settings"
+  - "Consider adding a 'learning mode' that prompts for unknown commands"
+  - "Implement command sandboxing for additional security"
+  - "Add support for custom project-specific permission files"
+  - "Consider integration with OS-level security features (AppArmor, SELinux)"
