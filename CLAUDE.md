@@ -4,76 +4,82 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-**Project Name:** Idle Tycoon: Pitch Deck  
-**Type:** Mobile Idle/Incremental Game  
-**Status:** Initial Planning Phase - No code implementation yet
+**Idle Tycoon: Pitch Deck** - A mobile idle/incremental game in initial planning phase.
 
-## Repository Structure
+## Current State
 
-This is an early-stage repository with minimal implementation:
+No code implementation exists yet. The repository contains:
+- Claude Code agent configurations (`.claude/agents/`)
+- Basic project documentation
+- Git version control setup
 
+## Next Steps Required
+
+### 1. Technology Stack Decision
+Choose one of the following approaches:
+
+**Web-Based Options:**
+- **Phaser.js**: JavaScript game framework, good for 2D games
+- **React/Next.js**: Component-based with state management
+- **Vue.js + Canvas**: Reactive framework with custom rendering
+
+**Mobile-First Options:**
+- **React Native**: Cross-platform JavaScript solution
+- **Flutter**: Google's cross-platform framework
+- **Unity**: C# based, good for complex games
+
+### 2. Project Initialization
+
+Once stack is selected, run appropriate initialization:
+
+```bash
+# For JavaScript/TypeScript projects:
+npm init -y && npm install [framework]
+
+# For Flutter:
+flutter create idle_tycoon_pitch_deck
+
+# For React Native:
+npx react-native init IdleTycoonPitchDeck
 ```
-idle-tycoon-pitch-deck/
-├── .claude/                    # Claude Code agent configurations
-│   ├── agents/                 # Specialized development agents (7 agents available)
-│   └── README.md              # Agent sync documentation
-├── .git/                      # Git version control
-├── CLAUDE.md                  # This file
-├── README.md                  # Basic project readme
-└── claude-code-permissions.yaml # Bash command permissions (1300+ lines)
+
+### 3. Development Commands (To Be Defined)
+
+After initialization, update this section with actual commands:
+- Build command: `[TBD based on stack]`
+- Dev server: `[TBD based on stack]`  
+- Test runner: `[TBD based on stack]`
+- Linting: `[TBD based on stack]`
+
+## Architecture Guidelines
+
+### Game State Structure (Pending Implementation)
 ```
+src/
+├── core/           # Game logic and calculations
+├── ui/             # Interface components
+├── state/          # State management
+├── services/       # Backend/storage services
+└── assets/         # Images, sounds, configs
+```
+
+### Design Principles
+- **Progress Display as Hero**: Idle income and key metrics should be prominently displayed
+- **Minimal Cognitive Load**: Interface should be immediately understandable
+- **Mobile-First**: Touch targets minimum 44x44px
+- **Performance**: Initial load < 3s, interactions < 100ms
 
 ## Available Claude Agents
 
-The `.claude/agents/` directory contains 7 specialized agents for different development tasks:
+Specialized agents in `.claude/agents/`:
+- `ux-designer-developer`: UI/UX implementation for game interfaces
+- `backend-api-developer`: Server-side logic and APIs
+- `test-first-developer`: TDD enforcement
+- `docs-maintainer`: Documentation updates
+- `regression-test-guardian`: Test suite maintenance
 
-- **backend-api-developer** (265 lines): Server-side logic, APIs, and database operations
-- **docs-architecture-maintainer** (209 lines): Technical documentation and architecture decisions
-- **docs-maintainer** (96 lines): General documentation management and updates
-- **regression-test-guardian** (278 lines): Comprehensive test suite maintenance and validation
-- **test-first-developer** (106 lines): Test-driven development enforcement
-- **ux-designer-developer** (90 lines): UI/UX design and game interface implementation
-- **ux-frontend-developer** (169 lines): Frontend development and user interface patterns
-
-## Current State & Next Decisions
-
-### Immediate Requirements
-1. **Technology Stack Selection**: Choose platform (Web/Mobile/Cross-platform)
-2. **Framework Decision**: Select game engine or framework
-3. **Project Initialization**: Set up build system, dependencies, and tooling
-4. **Architecture Planning**: Define code organization and patterns
-
-### Key Architectural Decisions Pending
-- **Platform**: Web browser, React Native, Flutter, or native mobile
-- **Game Engine**: Custom implementation, Phaser.js, Unity, or Cocos2d
-- **Backend Strategy**: Node.js/Express, serverless functions, or game-as-a-service
-- **State Management**: Local storage, cloud saves, or hybrid approach
-- **Deployment**: Static hosting, app stores, or progressive web app
-
-## Development Workflow
-
-### Project Initialization Process
-Once technology stack is selected, the workflow will be:
-1. Initialize project with chosen framework/build tools
-2. Configure development environment (linting, testing, bundling)
-3. Implement basic project structure and conventions
-4. Update this CLAUDE.md with build commands and architecture details
-
-### Expected Build Commands (TBD)
-After project initialization, typical commands will include:
-- `npm run dev` or equivalent for development server
-- `npm run build` for production builds
-- `npm run test` for running test suites
-- `npm run lint` for code quality checks
-
-## Repository Information
+## Repository Info
 
 - **GitHub**: https://github.com/fyreprone/idle-tycoon-pitch-deck
-- **Branch Strategy**: Currently on master branch
-- **Primary Language**: TBD (will be JavaScript/TypeScript, Dart, C#, or other based on stack choice)
-- **Created**: September 2025
-- **Initial Commit**: 7b52623 "Initial commit"
-
-## Agent Sync Strategy
-
-Agents are version-controlled via Git and automatically synced across environments. The `.claude/agents/` directory uses GitHub as the primary source for agent definitions, ensuring consistency across all development environments.
+- **Branch**: master
+- **Status**: Awaiting technology stack selection and initial implementation
